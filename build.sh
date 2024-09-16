@@ -7,7 +7,7 @@ INCLUDES="-I./raylib-5.0_linux_amd64/include"
 LIBS="-L./raylib-5.0_linux_amd64/lib -lraylib -lm"
 
 OUTPUT="-o ./build/blackjack"
-INPUT="main.c"
+INPUT="main.c blackjack.c"
 
 mkdir -p build
 
