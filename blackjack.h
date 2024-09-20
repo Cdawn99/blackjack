@@ -34,8 +34,6 @@ typedef struct {
     Rank rank;
 } Card;
 
-size_t card_value(Card card, bool soft_hand);
-
 typedef struct {
     size_t size;
     Card cards[MAX_DECK_SIZE];
@@ -43,24 +41,27 @@ typedef struct {
 
 void reshuffle_deck(Deck *deck);
 
-typedef struct {
-    Card *items;
-    size_t length;
-    size_t capacity;
+// Theoretical biggest hand: 4 aces, 4 twos, 3 threes -> Total: 11.
+#define MAX_HAND_SIZE 11
 
+typedef struct {
     int value;
     bool is_soft;
     bool first_ace_seen;
+
+    size_t size;
+    Card cards[MAX_HAND_SIZE];
 } Hand;
 
 typedef int Chips;
 
 typedef struct {
-    Hand hand;
     Chips chips;
+    Hand hand;
 } Player;
 
+// Draws a card from the deck to the player's hand
+// and updates the hand's value.
 void draw_card(Player *player, Deck *deck);
-void free_player_hand(Player *player);
 
 #endif // BLACKJACK_H_

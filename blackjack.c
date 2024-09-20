@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-size_t card_value(Card card, bool soft_hand) {
+static size_t card_value(Card card, bool soft_hand) {
     switch (card.rank) {
     case ACE:
         if (soft_hand) {
@@ -65,7 +65,7 @@ void reshuffle_deck(Deck *deck) {
 }
 
 void draw_card(Player *player, Deck *deck) {
-    assert(player && player->hand.items && deck && "Player, player's hand and deck must not be NULL");
+    assert(player && deck && "Player and deck must not be NULL");
     assert(deck->size != 0 && "Deck must have nonzero size");
 
     Card card = deck->cards[--deck->size];
@@ -82,12 +82,5 @@ void draw_card(Player *player, Deck *deck) {
         player->hand.is_soft = false;
     }
 
-    UTILS_DA_APPEND(&player->hand, card);
-}
-
-void free_player_hand(Player *player) {
-    if (!player) {
-        return;
-    }
-    free(player->hand.items);
+    player->hand.cards[player->hand.size++] = card;
 }
